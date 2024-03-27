@@ -1,24 +1,22 @@
 #!/usr/bin/env python3
 import sys
 
-letters_as_numbers = {
-    "one": 1,
-    "two": 2,
-    "three": 3,
-    "four": 4,
-    "five": 5,
-    "six": 6,
-    "seven": 7,
-    "eight": 8,
-    "nine": 9,
-}
 
-
-# TODO
-def sum_of_calibration_values(filename: str):
+def sum_of_calibration_values(filename: str) -> int:
+    numbers = []
+    letters = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
     with open(filename, "r") as f:
         lines = f.read().split("\n")
-        pass
+        for line in lines:
+            digs = []
+            for i, j in enumerate(line):
+                if j.isdigit():
+                    digs.append(j)
+                for x, y in enumerate(letters):
+                    if line[i:].startswith(y):
+                        digs.append(str(x + 1))
+            numbers.append(int(digs[0] + digs[-1]))
+    return sum(numbers)
 
 
 def main() -> None:
@@ -26,7 +24,7 @@ def main() -> None:
         print(f"Usage: %s <filename>" % sys.argv[0])
         sys.exit(1)
     filename = sys.argv[1].rstrip()
-    sum_of_calibration_values(filename)
+    print(sum_of_calibration_values(filename))
 
 
 if __name__ == "__main__":
